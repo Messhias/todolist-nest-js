@@ -1,45 +1,26 @@
 services:
   postgres:
     image: postgres:latest
-    container_name: musetto_db
+    container_name: todolist_db
     environment:
-      POSTGRES_DB: musetto
+      POSTGRES_DB: todolist
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     ports:
       - "5432:5432"
-    env_file:
-      - .env
-    deploy:
-      resources:
-        limits:
-          cpus: '1'
-          memory: 250M
     networks:
-      - musetto-network
+      - todolist-network
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USER}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
       interval: 10s
       timeout: 5s
       retries: 5
 
-  redis:
-    image: redis:latest
-    container_name: musetto_redis
-    deploy:
-      resources:
-        limits:
-          cpus: '1'
-          memory: 250M
-    networks:
-      - musetto-network
-    volumes:
-      - redisdata:/data
-
 networks:
-  musetto-network:
+  todolist-network:
     driver: bridge
 
 volumes:
   pgdata:
-  redisdata:
