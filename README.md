@@ -175,3 +175,5 @@ docker-compose up --build
 - Authentication: JWT.
 - Database: PostgreSQL.
 - Dependency Management: Yarn.
+
+There's a postman collection if you want to ready test RestAPI.
